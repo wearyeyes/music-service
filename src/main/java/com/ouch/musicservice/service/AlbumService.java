@@ -1,27 +1,45 @@
 package com.ouch.musicservice.service;
 
 import com.ouch.musicservice.model.Album;
-import org.springframework.stereotype.Component;
+import com.ouch.musicservice.repository.AlbumRepository;
+import com.ouch.musicservice.repository.SongRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+@Service
 public class AlbumService {
+    @Autowired
+    private AlbumRepository albumRepository;
+    @Autowired
+    private SongRepository songRepository;
 
     public List<Album> getAllAlbums() {
-        return null;
+        return albumRepository.findAll();
     }
 
     public Album getAlbumById(Long albumId) {
-        return null;
+        return albumRepository.findById(albumId).orElseThrow();
     }
 
-    public void createNewAlbum() {
+    public void createNewAlbum(Album newAlbum) {
+        newAlbum.getSongs().forEach(song -> songRepository.save(song));
+        albumRepository.save(newAlbum);
     }
 
-    public void updateAlbumById(Long id) {
+    @Transactional
+    public void updateAlbumById(Long albumId,
+                                Album updatedAlbum) {
+        Album albumFromDB = albumRepository.findById(albumId).orElseThrow();
+        albumFromDB.setName(updatedAlbum.getName());
+        albumFromDB.setDuration(updatedAlbum.getDuration());
+        albumFromDB.setCreatedDate(updatedAlbum.getCreatedDate());
+        albumFromDB.setSongs(updatedAlbum.getSongs());
     }
 
-    public void deleteAlbumById(Long id) {
+    public void deleteAlbumById(Long albumId) {
+        albumRepository.deleteById(albumId);
     }
 }

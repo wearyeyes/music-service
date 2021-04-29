@@ -19,22 +19,23 @@ public class AlbumController {
     }
 
     @GetMapping("/{albumId}")
-    public Album getAlbumById(Long albumId) {
+    public Album getAlbumById(@PathVariable("albumId") Long albumId) {
         return albumService.getAlbumById(albumId);
     }
 
     @PostMapping
-    public void createNewAlbum() {
-        albumService.createNewAlbum();
+    public void createNewAlbum(@RequestBody Album newAlbum) {
+        albumService.createNewAlbum(newAlbum);
     }
 
     @PutMapping("/{albumId}")
-    public void updateAlbumById(Long albumId) {
-        albumService.updateAlbumById(albumId);
+    public void updateAlbumById(@PathVariable Long albumId,
+                                @RequestBody Album updatedAlbum) {
+        albumService.updateAlbumById(albumId, updatedAlbum);
     }
 
     @DeleteMapping("/{albumId}")
-    public void deleteAlbumById(Long albumId) {
+    public void deleteAlbumById(@PathVariable Long albumId) {
         albumService.deleteAlbumById(albumId);
     }
 }

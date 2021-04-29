@@ -19,27 +19,32 @@ public class SongController {
     }
 
     @GetMapping("/{albumId}/songs")
-    public List<Song> getAllSongsFromAlbum() {
-        return songService.getAllSongsFromAlbum();
+    public List<Song> getAllSongsFromAlbum(@PathVariable Long albumId) {
+        return songService.getAllSongsFromAlbum(albumId);
     }
 
     @GetMapping("/{albumId}/songs/{songId}")
-    public Song getSongById(Long albumId, Long songId) {
+    public Song getSongById(@PathVariable Long albumId,
+                            @PathVariable Long songId) {
         return songService.getSongById(albumId, songId);
     }
 
     @PostMapping("{albumId}/songs")
-    public void addNewSongInAlbum(Long albumId) {
-        songService.addNewSongInAlbum(albumId);
+    public void addNewSongInAlbum(@PathVariable Long albumId,
+                                  @RequestBody Song newSong) {
+        songService.addNewSongInAlbum(albumId, newSong);
     }
 
     @PutMapping("/{albumId}/songs/{songId}")
-    public void updateSongInfoById(Long albumId, Long songId) {
-        songService.updateSongInfoById(albumId, songId);
+    public void updateSongInfoById(@PathVariable Long albumId,
+                                   @PathVariable Long songId,
+                                   @RequestBody Song updatedSong) {
+        songService.updateSongInfoById(albumId, songId, updatedSong);
     }
 
     @DeleteMapping("/{albumId}/songs/{songId}")
-    public void deleteSongById(Long albumId, Long songId) {
+    public void deleteSongById(@PathVariable Long albumId,
+                               @PathVariable Long songId) {
         songService.deleteSongById(albumId, songId);
     }
 }

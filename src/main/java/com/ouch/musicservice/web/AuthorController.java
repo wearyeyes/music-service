@@ -19,22 +19,23 @@ public class AuthorController {
     }
 
     @GetMapping("/{authorId}")
-    public Author getAuthorById(Long authorId) {
+    public Author getAuthorById(@PathVariable Long authorId) {
         return authorService.getAuthorById(authorId);
     }
 
     @PostMapping
-    public void createNewAuthor() {
-        authorService.createNewAuthor();
+    public void createNewAuthor(@RequestBody Author newAuthor) {
+        authorService.createNewAuthor(newAuthor);
     }
 
     @PutMapping("/{authorId}")
-    public void updateAuthorById(Long authorId) {
-        authorService.updateAuthorById(authorId);
+    public void updateAuthorById(@PathVariable Long authorId,
+                                 @RequestBody Author updatedAuthor) {
+        authorService.updateAuthorById(authorId, updatedAuthor);
     }
 
     @DeleteMapping("/{authorId}")
-    public void deleteAuthorById(Long authorId) {
+    public void deleteAuthorById(@PathVariable Long authorId) {
         authorService.deleteAuthorById(authorId);
     }
 }
