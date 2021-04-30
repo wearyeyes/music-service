@@ -13,8 +13,7 @@ public class Author {
     @Id
     @SequenceGenerator(
             name = "author_sequence",
-            sequenceName = "author_sequence",
-            allocationSize = 1
+            sequenceName = "author_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -28,11 +27,11 @@ public class Author {
 
     private LocalDate birthDate;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "m2m_author_album",
+            name = "m2m_author_song",
             joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id")
     )
-    private List<Album> albums;
+    private List<Song> songs;
 }

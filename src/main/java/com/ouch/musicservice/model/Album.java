@@ -14,8 +14,7 @@ public class Album {
     @Id
     @SequenceGenerator(
             name = "album_sequence",
-            sequenceName = "album_sequence",
-            allocationSize = 1
+            sequenceName = "album_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,

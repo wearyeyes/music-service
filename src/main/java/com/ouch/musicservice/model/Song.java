@@ -6,15 +6,14 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
+@Data
 @Entity
 public class Song {
     @Id
     @SequenceGenerator(
             name = "song_sequence",
-            sequenceName = "song_sequence",
-            allocationSize = 1
+            sequenceName = "song_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -26,12 +25,7 @@ public class Song {
 
     private Duration duration;
 
-    @ManyToMany
-    @JoinTable(
-            name = "m2m_author_song",
-            joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id")
-    )
+    @OneToMany(mappedBy = "songs")
     private List<Author> authors;
 
     @ManyToOne
