@@ -3,6 +3,7 @@ package com.ouch.musicservice.web;
 import com.ouch.musicservice.model.Album;
 import com.ouch.musicservice.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

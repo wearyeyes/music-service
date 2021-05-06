@@ -5,6 +5,7 @@ import com.ouch.musicservice.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -23,14 +24,24 @@ public class SongService {
     }
 
     public Song getSongById(Long albumId, Long songId) {
-        return null;
+        return songRepository.findByAlbumIdAndId(albumId, songId);
     }
 
     public void addNewSongInAlbum(Long albumId, Song newSong) {
-
+        newSong.setAlbum(albumService.getAlbumById(albumId));
+        songRepository.save(newSong);
     }
 
-    public void updateSongInfoById(Long albumId, Long songId, Song updatedSong) {}
+    @Transactional
+    public void updateSongInfoById(Long albumId, Long songId, Song updatedSong) {
+        Song song = getSongById(albumId, songId);
+        song.setName(updatedSong.getName());
+        song.setDuration(updatedSong.getDuration());
+        song.setAuthors(updatedSong.getAuthors());
+        song.setAlbum(updatedSong.getAlbum());
+    }
 
-    public void deleteSongById(Long albumId, Long songId) {}
+    public void deleteSongById(Long albumId, Long songId) {
+        songRepository.delete(getSongById(albumId, songId));
+    }
 }

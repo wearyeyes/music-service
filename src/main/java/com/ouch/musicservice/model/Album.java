@@ -1,5 +1,6 @@
 package com.ouch.musicservice.model;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,12 +11,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+@SequenceGenerator(name = "album_sequence")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Album {
     @Id
-    @SequenceGenerator(
-            name = "album_sequence",
-            sequenceName = "album_sequence"
-    )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "album_sequence"
@@ -26,8 +27,14 @@ public class Album {
 
     private Duration duration;
 
-    @OneToMany(mappedBy = "album")
+    @JsonManagedReference
+    @OneToMany(
+            mappedBy = "album",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Song> songs;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate createdDate;
 }

@@ -1,20 +1,21 @@
 package com.ouch.musicservice.model;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.List;
 
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 @Entity
+@SequenceGenerator(name = "song_sequence")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Song {
     @Id
-    @SequenceGenerator(
-            name = "song_sequence",
-            sequenceName = "song_sequence"
-    )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "song_sequence"
@@ -25,9 +26,10 @@ public class Song {
 
     private Duration duration;
 
-    @OneToMany(mappedBy = "songs")
+    @ManyToMany(mappedBy = "songs")
     private List<Author> authors;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "album_id")
     private Album album;
