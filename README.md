@@ -6,10 +6,13 @@ It has three entities: Album, Song and Author.
 
 Tools used: Java 11, Spring Boot 2.4.5, Spring Data Jpa, H2 DataBase, Maven, Lombok, Jackson, Swagger.
 
-## Controllers
+## API
 
-### Album
-
+<details>
+  <summary><b>Albums endpoints</b></summary>
+  
+<br />
+  
 Get all albums
 ```
 GET /albums
@@ -34,10 +37,13 @@ Delete album by Id
 ```
 DELETE /albums/{albumId}
 ```
+</details>
 
-
-### Song
-
+<details>
+  <summary><b>Songs endpoints</b></summary>
+  
+<br />
+  
 Get all songs
 ```
 GET /albums/songs
@@ -67,9 +73,13 @@ Delete song by Id
 ```
 DELETE /albums/{albumId}/songs/{songId}
 ```
+</details>
 
-### Author
-
+<details>
+  <summary><b>Authors endpoints</b></summary>
+  
+<br />
+  
 Get all authors
 ```
 GET /authors
@@ -94,3 +104,4 @@ Delete author by Id
 ```
 DELETE /authors/{authorId}
 ```
+</details>
